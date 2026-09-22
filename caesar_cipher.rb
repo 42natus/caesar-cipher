@@ -10,31 +10,27 @@ def getRightShift()
   right_shift
 end
 
-def right_shift(character, shift)
-  capital_letters = ("A".."Z").to_a
-  small_letters = ("a".."z").to_a
-  alphabets = 26
-
-  if capital_letters.include?(character) 
-    position = capital_letters.index(character)
-    return capital_letters[(position + shift) % alphabets]
-  end
-  
-  if small_letters.include?(character) 
-    position = small_letters.index(character)
-    return small_letters[(position + shift) % alphabets]
-  end
-end
-
 def caesar_cipher(message, right_shift)
-  characters = message.split("")
-  
-  characters.each_with_index do |character, idx|
-    if character.between?("a", "z") || character.between?("A", "Z")
-      characters[idx] = right_shift(character, right_shift)
+  codepoints = message.codepoints
+
+  codepoints.each_with_index do |codepoint, idx|
+    if codepoint.between?(65, 90) # uppercase letters
+      codepoints[idx] = codepoint + right_shift
+      if codepoints[idx] > 90
+        codepoints[idx] -= 26 # wrap from 'Z' to 'A'
+      end
+    elsif codepoint.between?(97, 122) # lowercase letters
+      codepoints[idx] = codepoint + right_shift
+      if codepoints[idx] > 122
+        codepoints[idx] -= 26 # wrap from 'z' to 'a'
+      end
     end
   end
-  characters.join
+
+  encrypted = ""
+  codepoints.each { |character| encrypted << character }
+
+  encrypted
 end
 
 
