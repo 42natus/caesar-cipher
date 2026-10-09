@@ -5,8 +5,8 @@ def message
   gets.chomp
 end
 
-def right_shift_factor
-  puts 'By how many letters would you like to right shift it?'
+def shift_factor
+  puts 'By how many letters would you like to shift it?'
   gets.chomp.to_i
 end
 
@@ -35,5 +35,5 @@ def caesar_cipher(message, shift_factor)
   encrypted.join
 end
 
-encrypted_message = caesar_cipher(message, right_shift_factor)
+encrypted_message = caesar_cipher(message, shift_factor)
 puts "\nYour encrypted message is:\n\"#{encrypted_message}\""
